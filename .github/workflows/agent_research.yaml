@@ -31,9 +31,11 @@ jobs:
 
     - name: Install dependencies
       run: |
-        uv venv
-        source .venv/bin/activate
-        uv pip install -r pyproject.toml
-
+        # uv venv
+        # source .venv/bin/activate
+        # uv pip install -r pyproject.toml
+        uv sync
+    - name: Run Agent Research Script
+      run: |
         # Exucuting the code
-        python agent_researcher.py "${{ matrix.research_topic }}"
+        uv run python agent_researcher.py "${{ matrix.research_topic }}"

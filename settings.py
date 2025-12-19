@@ -22,6 +22,7 @@ class Settings(BaseSettings):
             "transport": "stdio"
         }
     }
+    github_debug_mode: bool = os.getenv("ACTIONS_STEP_DEBUG")
     api_key: SecretStr | None = os.environ.get("OPENAI_API_KEY")
     system_prompt: str = """
         You are an agent responsible for searching new DevOps changes across the internet.
