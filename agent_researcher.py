@@ -3,6 +3,7 @@ from settings import Settings
 from langchain_core.messages import HumanMessage
 from deepagents import create_deep_agent
 from langchain_core.messages import BaseMessage, AIMessage
+from actions_toolkit import core
 
 # local imports
 from devops_agent import agent_builder
@@ -11,38 +12,38 @@ from agent_tools import get_web_url_by_query, fetch_web_content
 import sys
 
 def print_agent_trace(agent_response) -> None:
-    print(f"\n🤖 Agent Response Trace")
+    core.debug(f"\n🤖 Agent Response Trace")
 
     # Better response handling
-    print("\n" + "="*60)
-    print("AGENT RESPONSE:")
-    print("="*60)
+    core.debug("\n" + "="*60)
+    core.debug("AGENT RESPONSE:")
+    core.debug("="*60)
     
     # Print all messages to see the conversation flow
     for i, msg in enumerate(agent_response.get("messages", [])):
-        print(f"\nMessage {i+1} ({type(msg).__name__}):")
+        core.debug(f"\nMessage {i+1} ({type(msg).__name__}):")
         if hasattr(msg, 'content'):
             content = msg.content
             if isinstance(content, str):
-                print(content)
+                core.debug(content)
             elif isinstance(content, list):
                 for item in content:
-                    print(f"  {item}")
+                    core.debug(f"  {item}")
             else:
-                print(f"  {content}")
+                core.debug(f"  {content}")
         else:
-            print(f"  {msg}")
+            core.debug(f"  {msg}")
 
 def print_agent_last_message(agent_response) -> None:    
     if agent_response.get("messages"):
         last_msg = agent_response["messages"][-1]
-        print("\n" + "="*60)
-        print("LAST MESSAGE DETAILS:")
-        print("="*60)
-        print(f"Type: {type(last_msg).__name__}")
-        print(f"Content: {last_msg.content if hasattr(last_msg, 'content') else last_msg}")
+        core.info("\n" + "="*60)
+        core.info("LAST MESSAGE DETAILS:")
+        core.info("="*60)
+        core.info(f"Type: {type(last_msg).__name__}")
+        core.info(f"Content: {last_msg.content if hasattr(last_msg, 'content') else last_msg}")
         if hasattr(last_msg, 'response_metadata'):
-            print(f"Metadata: {last_msg.response_metadata}")
+            core.info(f"Metadata: {last_msg.response_metadata}")
 
 
 def main():
@@ -65,9 +66,11 @@ def main():
     
     print("\n🤖 Agent processing query...")
     response = search_agent.invoke({"messages": [HumanMessage(content=query)]})
+
+    if settings.runner_debug == "1":
+        print_agent_trace(response)
     
-
-
+    print_agent_last_message(response)
 
 if __name__ == "__main__":
     main()
