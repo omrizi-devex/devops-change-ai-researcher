@@ -17,7 +17,7 @@ def main():
 
     llm_openai = ChatOpenAI(
         model="gpt-5-nano",
-        api_key=settings.api_key,
+        api_key=settings.api_key.get_secret_value(),
         temperature=0,
         max_retries=10
     )

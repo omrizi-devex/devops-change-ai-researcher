@@ -10,7 +10,7 @@ DOTENV_FILE = os.path.join(os.path.dirname(__file__), ".env")
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env", # Specify the path to your .env file
+        # env_file=".env", # Specify the path to your .env file
         env_file_encoding='utf-8',
         extra="allow"
     )
