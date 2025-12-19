@@ -6,7 +6,7 @@ on:
       research_topic_list:
         description: "A comma separated list of research topics for the agent to investigate."
         required: true
-        default: '["kubernetes latest", "github actions"]'
+        default: [ "kubernetes latest", "github actions" ]
 
 jobs:
   # prepare:
