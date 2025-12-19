@@ -27,7 +27,8 @@ jobs:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     strategy:
       matrix:
-        research_topic: ${{ fromJson(needs.prepare.outputs.matrix) }}
+        research_topic: ${{ inputs.research_topic_list }}
+        # research_topic: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
     - uses: actions/checkout@v5
 
