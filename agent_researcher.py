@@ -1,16 +1,8 @@
-from httpx import request
 from langchain_openai import ChatOpenAI
-from langchain_core.utils.utils import raise_for_status_with_text
-from langchain_ollama import ChatOllama
 from settings import Settings
-from fastmcp import Client
-import asyncio
 from langchain_core.messages import HumanMessage
 from deepagents import create_deep_agent
-from langgraph.graph import StateGraph, END
-from typing import TypedDict
 from langchain_core.messages import BaseMessage, AIMessage
-import requests
 
 # local imports
 from devops_agent import agent_builder
