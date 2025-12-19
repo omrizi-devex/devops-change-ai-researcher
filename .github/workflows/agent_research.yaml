@@ -35,4 +35,4 @@ jobs:
 
     - name: Run Agent Research Script
       run: |
-        uv python agent_researcher.py "${{ matrix.research_topic }}"
+        python agent_researcher.py "${{ matrix.research_topic }}"
