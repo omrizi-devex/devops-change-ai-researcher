@@ -69,8 +69,11 @@ class Settings(BaseSettings):
 
     Output:
     Construct a short and concise summary of your findings based on the information retrieved using the tools.
-    Start with a brief overview, 
-    Continue with deprecations found, 
-    Then new features found,
-    End with recommendations for next steps.
+    Title: The technology name, with prefix "-"
+    Below, each section indent and starts with "*"
+    sections:
+    1. Overview
+    2. Deprecations found
+    3. New features found
+    4. Recommendations for next steps
     """

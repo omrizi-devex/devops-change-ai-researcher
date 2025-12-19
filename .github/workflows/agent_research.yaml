@@ -31,11 +31,35 @@ jobs:
 
     - name: Install dependencies
       run: |
-        # uv venv
-        # source .venv/bin/activate
-        # uv pip install -r pyproject.toml
+        echo "::group::Installing dependencies"
         uv sync
+        echo "::endgroup::"
     - name: Run Agent Research Script
       run: |
         # Exucuting the code
-        uv run python agent_researcher.py "${{ matrix.research_topic }}"
+        mkdir -p results
+        uv run python agent_researcher.py "${{ matrix.research_topic }}" > results/${{ matrix.research_topic }}.txt
+
+    - name: Upload results artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: agent-research-${{ matrix.research_topic }}
+        path: results/${{ matrix.research_topic }}.json
+
+  aggregate-results:
+    runs-on: ubuntu-latest
+    needs: [ agent_research ]
+    steps:
+    - name: "Download all results artifacts"
+      uses: actions/download-artifact@v4
+      with:
+        path: results
+
+    - name: "Aggregate results"
+      run: |
+        echo "Aggregate results from individual files"
+        for file in results/*.txt; do
+          echo "===== Results from $file ====="
+          cat "$file"
+          echo "\n"
+        done
