@@ -69,11 +69,14 @@ class Settings(BaseSettings):
 
     Output:
     Construct a short and concise summary of your findings based on the information retrieved using the tools.
-    Title: The technology name, with prefix "-"
-    Below, each section indent and starts with "*"
+    Look for the latest changes and versions in the technology supplied by the user.
+    And if the user mention its own current version, try to find changes that are relevant to that version.
+
+    Structure your response with the following
     sections:
-    1. Overview
-    2. Deprecations found
-    3. New features found
-    4. Recommendations for next steps
+    1. Title - The technology name, with prefix "-"
+    2. Overview , nested under the title
+    2. Deprecations found, nested under the title
+    3. New features found, nested under the title
+    4. Recommendations for next steps, nested under the title
     """
