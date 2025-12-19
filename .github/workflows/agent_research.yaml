@@ -58,8 +58,17 @@ jobs:
     - name: "Aggregate results"
       run: |
         echo "Aggregate results from individual files"
-        for file in results/*.txt; do
-          echo "===== Results from $file ====="
-          cat "$file"
-          echo "\n"
+        # enable recursive ** and make globs disappear when no match
+        shopt -s globstar nullglob
+        found=0
+        for f in results/**/*.txt results/*.txt; do
+          [ -f "$f" ] || continue
+          found=1
+          echo "===== Results from $f ====="
+          cat "$f"
+          echo
         done
+        if [ "$found" -eq 0 ]; then
+          echo "No .txt result files found."
+          exit 1
+        fi
