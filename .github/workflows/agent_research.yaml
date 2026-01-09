@@ -37,11 +37,10 @@ jobs:
     - name: Run Agent Research Script
       run: |
         # Exucuting the code
-        mkdir -p results
+        mkdir -p reports
         topic="${{ matrix.research_topic }}"
         safe_topic="$(printf '%s' "$topic" | tr -c '[:alnum:]_-' '_')"
 
-        # uv run python agent_researcher.py "${{ matrix.research_topic }}" > results/${safe_topic}.txt
         uv run python agent_researcher.py "${{ matrix.research_topic }}"
 
     - name: Show results
