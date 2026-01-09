@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "actions-toolkit>=0.1.15",
+    "datetime>=6.0",
     "ddgs>=9.10.0",
     "deepagents>=0.3.0",
     "fastmcp>=2.13.3",

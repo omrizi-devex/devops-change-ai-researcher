@@ -41,7 +41,8 @@ jobs:
         topic="${{ matrix.research_topic }}"
         safe_topic="$(printf '%s' "$topic" | tr -c '[:alnum:]_-' '_')"
 
-        uv run python agent_researcher.py "${{ matrix.research_topic }}" > results/${safe_topic}.txt
+        # uv run python agent_researcher.py "${{ matrix.research_topic }}" > results/${safe_topic}.txt
+        uv run python agent_researcher.py
 
     - name: Upload results artifact
       uses: actions/upload-artifact@v4

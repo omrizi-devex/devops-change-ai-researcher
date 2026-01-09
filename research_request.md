@@ -1,0 +1,3 @@
+Question: What are the latest changes in Argo CD? Please include release notes, changelog, upgrade notes, and security advisories as of today.
+
+Provide an up-to-date overview of new and notable features in GitHub Workflows (GitHub Actions). Include official docs, release notes, and credible announcements as of today. Cover new workflow syntax/features, runner options, concurrency controls, permissions for GITHUB_TOKEN, reusable workflows, environment protections, composite actions, and any important migration steps. Provide citations with URLs and note the date of the information.
