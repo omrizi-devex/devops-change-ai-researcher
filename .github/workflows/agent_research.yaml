@@ -48,7 +48,7 @@ jobs:
       run: |
         echo "::group::Showing results"
         ls -l
-        ls -l reports/final_*.txt
+        ls -l reports
         echo "::endgroup::"
 
     - name: Upload results artifact
@@ -64,15 +64,15 @@ jobs:
     - name: "Download all results artifacts"
       uses: actions/download-artifact@v4
       with:
-        path: results
+        path: reports
 
-    - name: "Aggregate results"
+    - name: "Aggregate reports"
       run: |
         echo "Aggregate results from individual files"
         # enable recursive ** and make globs disappear when no match
         shopt -s globstar nullglob
         found=0
-        for f in results/**/*.txt results/*.txt; do
+        for f in reports/**/*.txt reports/*.txt; do
           [ -f "$f" ] || continue
           found=1
           echo "===== Results from $f ====="
