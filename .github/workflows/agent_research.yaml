@@ -55,7 +55,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: agent-research-${{ matrix.research_topic }}
-        path: reports/final_*.txt
+        path: reports/final_*.md
 
   aggregate-results:
     runs-on: ubuntu-latest
@@ -72,7 +72,7 @@ jobs:
         # enable recursive ** and make globs disappear when no match
         shopt -s globstar nullglob
         found=0
-        for f in reports/**/*.txt reports/*.txt; do
+        for f in reports/**/*.md reports/*.md; do
           [ -f "$f" ] || continue
           found=1
           echo "===== Results from $f ====="
