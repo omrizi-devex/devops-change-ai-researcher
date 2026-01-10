@@ -9,6 +9,8 @@ on:
       - main
       - master
 
+permissions:
+  checks: write
 
 jobs:
   lint:
@@ -33,9 +35,15 @@ jobs:
 
       - name: "🔍 Run Linter"
         run: |
-          uv run pylint agent_researcher.py --fail-under=7 ||
-            (echo "::error::Linting failed" && exit 1)
+          tmp_res=$(mktemp)
+          tmp_error=$(mktemp)
+          uv run pylint agent_researcher.py --fail-under=7 > "$tmp_res" 2> "$tmp_error"
 
+          if [ $? -ne 0 ]; then
+            echo "::error::Linting failed: $(cat "$tmp_error")"
+            exit 1
+          fi
+          echo "::info::Linting results: $(cat "$tmp_res")"
   format:
     runs-on: ubuntu-latest
     steps:
