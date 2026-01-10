@@ -36,15 +36,15 @@ jobs:
       - name: "🔍 Run Linter"
         run: |
           tmp_res=$(mktemp)
-          uv run pylint agent_researcher.py --fail-under=7 > "$tmp_res" 2>&1
+          uv run pylint agent_researcher.py --fail-under=7 &> "$tmp_res"
           exit_code=$?
 
           if [ $exit_code -ne 0 ]; then
             echo "::error::Linting failed (exit code: $exit_code)"
-            echo "::error::Linting results: (cat $tmp_res)"
+            echo "::error::Linting results: $(cat $tmp_res)"
             exit 1
           fi
-          echo "::info::Linting results: (cat $tmp_res)"
+          echo "::info::Linting results: $(cat $tmp_res)"
   format:
     runs-on: ubuntu-latest
     steps:
