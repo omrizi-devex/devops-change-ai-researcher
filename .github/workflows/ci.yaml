@@ -1,0 +1,52 @@
+name: "CI"
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+
+jobs:
+  python-ci-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v5
+
+      - name: "🐍 Set up Python"
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: ".python-version"
+
+      - name: "⚡ Install uv"
+        uses: astral-sh/setup-uv@v7
+
+      - name: "📦 Install dependencies"
+        run: |
+          echo "::group::Installing dependencies"
+          uv sync
+          echo "::endgroup::"
+
+      - name: "🔍 Run Linter"
+        run: |
+          uv run pylint agent_researcher.py --fail-under=7 ||
+            (echo "::error::Linting failed" && exit 1)
+      
+      - name: "✨ Run Formatter"
+        run: |
+          uv run black agent_researcher.py --check ||
+            (echo "::error::Formatting failed" && exit 1)
+
+      - name: "📝 Run Type Checker"
+        run: |
+          uv run mypy agent_researcher.py ||
+            (echo "::error::Type checking failed" && exit 1)
+
+      - name: "🔒 Run Security Checks"
+        run: |
+          uv run bandit agent_researcher.py ||
+            (echo "::error::Security checks failed" && exit 1)
