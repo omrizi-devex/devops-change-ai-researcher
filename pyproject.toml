@@ -6,7 +6,6 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "actions-toolkit>=0.1.15",
-    "black>=25.12.0",
     "datetime>=6.0",
     "ddgs>=9.10.0",
     "deepagents>=0.3.0",
@@ -21,10 +20,8 @@ dependencies = [
     "langchain-openapi>=0.1.1",
     "langgraph>=1.0.4",
     "langgraph-cli[inmem]>=0.4.9",
-    "mypy>=1.19.1",
     "openai>=2.11.0",
     "pydantic-settings>=2.12.0",
-    "pylint>=4.0.4",
 ]
 
 [dependency-groups]
@@ -32,4 +29,5 @@ dev = [
     "bandit>=1.9.2",
     "black>=25.12.0",
     "pylint>=4.0.4",
+    "mypy>=1.19.1",
 ]
