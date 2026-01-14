@@ -1,14 +1,9 @@
 name: "CI"
 on:
   push:
-    branches:
-      - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
 
+permissions:
+  checks: write
 
 jobs:
   lint:
@@ -33,9 +28,21 @@ jobs:
 
       - name: "🔍 Run Linter"
         run: |
-          uv run pylint agent_researcher.py --fail-under=7 ||
-            (echo "::error::Linting failed" && exit 1)
+          tmp_res=$(mktemp)
+          set +e
+          uv run pylint agent_researcher.py --fail-under=7 &> "$tmp_res"
+          exit_code=$?
+          set -e
+          
+          echo "::group::Linting Output"
+          cat "$tmp_res"
+          echo "::endgroup::"
 
+          if [ $exit_code -ne 0 ]; then
+            echo "::error::Linting failed (exit code: $exit_code)"
+            echo "::error::Code quality score is below the required threshold of 7.0"
+            exit $exit_code
+          fi
   format:
     runs-on: ubuntu-latest
     steps:
