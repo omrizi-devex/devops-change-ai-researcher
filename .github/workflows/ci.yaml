@@ -43,6 +43,7 @@ jobs:
             echo "::error::Code quality score is below the required threshold of 7.0"
             exit $exit_code
           fi
+ 
   format:
     runs-on: ubuntu-latest
     steps:
