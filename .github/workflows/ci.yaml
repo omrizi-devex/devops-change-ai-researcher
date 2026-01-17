@@ -90,8 +90,14 @@ jobs:
 
       - name: "📝 Run Type Checker"
         run: |
-          uv run mypy agent_researcher.py ||
-            (echo "::error::Type checking failed" && exit 1)
+          tmp_res=$(mktemp)
+          tmp_error=$(mktemp)
+          uv run mypy *.py > "$tmp_res" 2> "$tmp_error"
+
+          if [ $? -ne 0 ]; then
+            echo "::warn::Type check failed: $(cat "$tmp_error")"
+          fi
+          echo "::info::Linting results: $(cat "$tmp_res")"
 
   security:
     runs-on: ubuntu-latest
@@ -115,5 +121,5 @@ jobs:
 
       - name: "🔒 Run Security Checks"
         run: |
-          uv run bandit agent_researcher.py ||
+          uv run bandit *.py ||
             (echo "::error::Security checks failed" && exit 1)

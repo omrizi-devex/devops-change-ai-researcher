@@ -17,6 +17,7 @@ from promots import (
     SUBAGENT_DELEGATION_INSTRUCTIONS,
 )
 
+
 def main():
     # Get user input from terminal
     query = sys.argv[1] if len(sys.argv) > 1 else input("Enter your query: ")
