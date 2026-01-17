@@ -5,6 +5,7 @@ from deepagents.backends import FilesystemBackend
 from deepagents import create_deep_agent, CompiledSubAgent
 from datetime import datetime
 from langchain.agents import create_agent
+from langgraph.checkpoint.memory import MemorySaver
 
 # local imports
 from langchain.tools import tool
@@ -60,6 +61,8 @@ def main():
     query = sys.argv[1] if len(sys.argv) > 1 else input("Enter your query: ")
     settings = Settings()
 
+    memory = MemorySaver()
+
     llm_openai = ChatOpenAI(
         model="gpt-5-nano",
         api_key=settings.api_key.get_secret_value(),
@@ -100,6 +103,7 @@ def main():
         system_prompt=INSTRUCTIONS,
         subagents=[research_sub_agent],
         backend=FilesystemBackend(root_dir="./reports", virtual_mode=True),
+        checkpointer=memory,
     )
 
     print("\n🤖 Agent processing query...")

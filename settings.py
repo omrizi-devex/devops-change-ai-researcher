@@ -11,15 +11,15 @@ DOTENV_FILE = os.path.join(os.path.dirname(__file__), ".env")
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         # env_file=".env", # Specify the path to your .env file
-        env_file_encoding='utf-8',
-        extra="allow"
+        env_file_encoding="utf-8",
+        extra="allow",
     )
     ollama_model: str = "llama3.2:latest"
     mcp_config: dict = {
         "web-search": {
             "command": "node",
             "args": ["/Users/omriziner/Documents/git/web-search/build/index.js"],
-            "transport": "stdio"
+            "transport": "stdio",
         }
     }
     runner_debug: str | None = os.environ.get("RUNNER_DEBUG")
